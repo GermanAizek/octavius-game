@@ -52,12 +52,12 @@ void SlotMachine::spin()
 		column1 = column2 = column3 = NULL;
 	}
 	else
-		cout << "Please make a bet before spinning." << endl;
+		std::cout << "Please make a bet before spinning.\n";
 }
 
 void SlotMachine::forceStop()
 {
-	this->forceStop = true;
+	this->forceStopped = true;
 }
 
 // Loads a wheel into the respective column of the screen
@@ -72,9 +72,9 @@ void SlotMachine::printscreen()
 {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
-			cout << screen[i][j] << " ";
+			std::cout << screen[i][j] << " ";
 		}
-		cout << endl;
+		std::cout << '\n';
 	}
 }
 
@@ -83,10 +83,10 @@ void SlotMachine::printscreen()
 void SlotMachine::bet(int lines)
 {
 	if ((lines < 1) || (lines > 5)) {
-		cout << "You may only bet between 1 and 5 lines. Please try again." << endl;
+		std::cout << "You may only bet between 1 and 5 lines. Please try again.\n";
 	}
 	else if ((credits - lines) < 0) {
-		cout << "You have " << credits << " credits available. Try adding more money." << endl;
+		std::cout << "You have " << credits << " credits available. Try adding more money.\n";
 	}
 	else {
 		betAmount = lines;
@@ -99,7 +99,7 @@ void SlotMachine::insertcoin()
 {
 	credits++;
 
-	cout << "You now have " << credits << " credits." << endl;
+	std::cout << "You now have " << credits << " credits.\n";
 }
 
 // Adds multiple credits based on the bill denomination.
@@ -109,7 +109,7 @@ void SlotMachine::insertbill(double billAmount)
 		int newcredits = (int)(billAmount / .25);
 		credits += newcredits;
 
-		cout << "You now have " << credits << " credits." << endl;
+		std::cout << "You now have " << credits << " credits.\n";
 	}
 }
 
@@ -165,14 +165,14 @@ void SlotMachine::checkwinnings()
 	}
 
 	if (winnings > 0) {
-		cout << "You won " << winnings << " credits!" << endl;
+		std::cout << "You won " << winnings << " credits!\n";
 		credits += winnings;
 	}
 	else {
-		cout << "Sorry, you did not win anything." << endl;
+		std::cout << "Sorry, you did not win anything.\n";
 	}
 
-	cout << "You have " << credits << " credits left." << endl << endl;
+	std::cout << "You have " << credits << " credits left.\n\n";
 }
 
 // Determines the winning sequences. 
