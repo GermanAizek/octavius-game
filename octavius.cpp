@@ -1,4 +1,5 @@
 ﻿#include "octavius.h"
+#include "Classes/SlotMachine.h"
 
 void init()
 {
@@ -87,6 +88,17 @@ void drawCube(float xrf, float yrf, float zrf) {
 
 int main()
 {
+	SlotMachine* slotmachine = new SlotMachine();
+
+	slotmachine->insertbill(5.00);
+	slotmachine->insertcoin();
+
+	slotmachine->bet(5);
+	slotmachine->spin();
+
+	slotmachine->bet(5);
+	slotmachine->spin();
+	//
 	init();
 
 	bool running = true;
@@ -100,6 +112,7 @@ int main()
 			{
 			case SDL_QUIT:
 				running = false;
+				delete(slotmachine);
 				break;
 
 			case SDL_KEYDOWN:
