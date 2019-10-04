@@ -1,6 +1,5 @@
-#pragma once
-
 #include "Wheel.h"
+#include <iostream>
 
 class SlotMachine {
 public:
@@ -35,5 +34,5 @@ private:
 	int screen[3][3];
 
 	Wheel* wheels[3];
-	bool forceStop;
+	bool forceStopped;
 };
