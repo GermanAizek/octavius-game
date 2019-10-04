@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "SDL.h"
+#include "SDL_ttf.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>

@@ -20,13 +20,14 @@ public:
 	SlotMachine();
 	~SlotMachine();
 	void spin();
-	void bet(int);
+	void bet(int lines);
 	void insertcoin();
-	void insertbill(double);
+	void insertbill(double billAmount);
 	void printscreen();
+	void forceStop();
 
 private:
-	void loadscreen(int, int*);
+	void loadscreen(int col, int* wheelcolumn);
 	void checkwinnings();
 	int checkline(int line[3]);
 	int credits;
@@ -34,4 +35,5 @@ private:
 	int screen[3][3];
 
 	Wheel* wheels[3];
+	bool forceStop;
 };

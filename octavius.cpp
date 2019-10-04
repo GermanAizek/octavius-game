@@ -9,6 +9,10 @@ void init()
 		exit(1);
 	}
 
+	// SDL TTF init
+	TTF_Init();
+
+	// SDL GL init
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
@@ -16,8 +20,19 @@ void init()
 
 	window = SDL_CreateWindow("Slot machine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
-	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+	TTF_Font* font = TTF_OpenFont("arial.ttf", 25);
+	SDL_Color color = { 255, 255, 255 };
+	SDL_Surface* surface = TTF_RenderText_Solid(font,
+		"Welcome to Gigi Labs", color);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
+	int texW = 0;
+	int texH = 0;
+	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+	SDL_Rect dstrect = { 0, 0, texW, texH };
+
+	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
 	if (window == NULL)
 	{
 		exit(1);
@@ -121,9 +136,19 @@ int main()
 				case SDLK_ESCAPE:
 					running = false;
 					break;
+				case SDLK_KP_SPACE:
+					slotmachine->forceStop();
+					break;
+				case SDLK_RETURN:
+					slotmachine->spin();
+					break;
 				}
+
 				break;
 			}
+
+			SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+			SDL_RenderPresent(renderer);
 		}
 
 		// calc rotate
@@ -138,6 +163,12 @@ int main()
 		SDL_GL_SwapWindow(window);
 	}
 
+	SDL_DestroyTexture(texture);
+	SDL_FreeSurface(surface);
+	TTF_CloseFont(font);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	TTF_Quit();
 	SDL_Quit();
 
 	return 0;

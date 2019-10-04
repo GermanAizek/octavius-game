@@ -55,15 +55,20 @@ void SlotMachine::spin()
 		cout << "Please make a bet before spinning." << endl;
 }
 
+void SlotMachine::forceStop()
+{
+	this->forceStop = true;
+}
+
 // Loads a wheel into the respective column of the screen
-void Machine::loadscreen(int col, int* wheelcolumn)
+void SlotMachine::loadscreen(int col, int* wheelcolumn)
 {
 	for (int i = 0; i < 3; i++)
 		screen[i][col] = wheelcolumn[i];
 }
 
 // Simply prints the screen
-void Machine::printscreen()
+void SlotMachine::printscreen()
 {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -75,7 +80,7 @@ void Machine::printscreen()
 
 // Bet function takes the number of lines the user wants to bet on (3 horizontal, 2 diagonals)
 // and checks if they have enough credits to bet that much.
-void Machine::bet(int lines)
+void SlotMachine::bet(int lines)
 {
 	if ((lines < 1) || (lines > 5)) {
 		cout << "You may only bet between 1 and 5 lines. Please try again." << endl;
@@ -90,7 +95,7 @@ void Machine::bet(int lines)
 }
 
 // Adds a credit
-void Machine::insertcoin()
+void SlotMachine::insertcoin()
 {
 	credits++;
 
@@ -98,7 +103,7 @@ void Machine::insertcoin()
 }
 
 // Adds multiple credits based on the bill denomination.
-void Machine::insertbill(double billAmount)
+void SlotMachine::insertbill(double billAmount)
 {
 	if ((billAmount >= 1.00) && (billAmount <= 20.00)) {
 		int newcredits = (int)(billAmount / .25);
@@ -109,7 +114,7 @@ void Machine::insertbill(double billAmount)
 }
 
 // Checks lines for wins and adds credits earned.
-void Machine::checkwinnings()
+void SlotMachine::checkwinnings()
 {
 	int lineValues[3];
 	int winnings = 0;
@@ -173,7 +178,7 @@ void Machine::checkwinnings()
 // Determines the winning sequences. 
 // 3 of a kind wins something
 // Two cherries and something else wins as does two luckysevens and something else.
-int Machine::checkline(int line[3])
+int SlotMachine::checkline(int line[3])
 {
 	if (line[0] == this->seven && line[1] == this->seven && line[2] == this->seven) { return 1000; }
 	if (line[0] == this->watermelon && line[1] == this->watermelon && line[2] == this->watermelon) { return 800; }
