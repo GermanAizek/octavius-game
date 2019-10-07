@@ -1,17 +1,11 @@
-﻿#pragma once
-
-#include "SDL.h"
+﻿#include "SDL.h"
 #include "SDL_ttf.h"
+#include "SDL_image.h"
 
-#include <GL/gl.h>
-#include <GL/glu.h>
+#ifdef WIN32
+#undef main
+#include <windows.h>
+#endif
 
-#include <iostream>
-using namespace std;
-
-SDL_Window* window;
-
-const int width = 640;
-const int height = 480;
-
-void drawCube(float xrf, float yrf, float zrf);
+#include <gl/GL.h>
+#include <gl/GLU.h>
