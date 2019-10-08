@@ -9,6 +9,11 @@ private:
 	Uint8* wavBuffer;
 
 public:
-	void initSound();
-	bool loadPlay(const char* sound);
+	Sound() {
+		// SDL audio device init
+		SDL_Init(SDL_INIT_AUDIO);
+	}
+	SDL_AudioDeviceID getID() { return deviceId; }
+	Uint8* loadSound(const char* sound);
+	bool play();
 };
