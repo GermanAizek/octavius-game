@@ -43,7 +43,7 @@ void SlotMachine::spin()
 		printscreen();
 		checkwinnings();
 
-		betAmount = 0;
+		//betAmount = 0;
 
 		delete[] column1;
 		delete[] column2;
@@ -97,7 +97,7 @@ void SlotMachine::bet(int lines)
 // Adds a credit
 void SlotMachine::insertcoin()
 {
-	credits++;
+	credits = 1000;
 
 	std::cout << "You now have " << credits << " credits.\n";
 }
