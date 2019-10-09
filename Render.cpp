@@ -1,5 +1,8 @@
 #include "Render.h"
 
+extern const int width = 1920;
+extern const int height = 1080;
+
 void initVideo()
 {
 	// SDL video device init
@@ -101,4 +104,30 @@ SDL_Surface* RenderText(const char* message, SDL_Color color, int x, int y, int 
 	glDeleteTextures(1, &texture);
 
 	return sFont;
+}
+
+void button_process_event(Button* btn, const SDL_Event* ev)
+{
+	if (ev->type == SDL_MOUSEBUTTONDOWN)
+	{
+		if (ev->button.button == SDL_BUTTON_LEFT && ev->button.x >= btn->drawRect.x && ev->button.x <= (btn->drawRect.x + btn->drawRect.w) &&
+			ev->button.y >= btn->drawRect.y && ev->button.y <= (btn->drawRect.y + btn->drawRect.h))
+		{
+			btn->pressed = true;
+		}
+	}
+}
+
+bool button(SDL_Surface* screen, Button* btn)
+{
+	SDL_BlitSurface(btn->surface, nullptr, screen, &btn->drawRect);
+
+	if (btn->pressed)
+	{
+		SDL_BlitSurface(btn->surfaceHold, nullptr, screen, &btn->drawRect);
+		btn->pressed = false;
+		return true;
+	}
+
+	return false;
 }
