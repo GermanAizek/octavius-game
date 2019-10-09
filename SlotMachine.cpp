@@ -28,6 +28,8 @@ SlotMachine::~SlotMachine() {
 void SlotMachine::spin()
 {
 	if (betAmount > 0) {
+		spinnable = true;
+
 		wheels[0]->spin();
 		wheels[1]->spin();
 		wheels[2]->spin();
@@ -57,7 +59,19 @@ void SlotMachine::spin()
 
 void SlotMachine::forceStop()
 {
-	this->forceStopped = true;
+	forceStopped = true;
+}
+
+std::vector<int> SlotMachine::getScreen()
+{
+	std::vector<int> screenVec;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			screenVec.push_back(screen[i][j]);
+		}
+	}
+
+	return screenVec;
 }
 
 // Loads a wheel into the respective column of the screen
@@ -172,6 +186,7 @@ void SlotMachine::checkwinnings()
 		std::cout << "Sorry, you did not win anything.\n";
 	}
 
+	lastWinning = winnings;
 	std::cout << "You have " << credits << " credits left.\n\n";
 }
 
