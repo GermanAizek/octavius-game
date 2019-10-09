@@ -1,8 +1,8 @@
 ﻿#include "octavius.h"
 #include "Classes/SlotMachine.h"
 #include "Classes/Timer.h"
-#include "Render.h"
-#include "Sound.h"
+#include "Classes/Render.h"
+#include "Classes/Sound.h"
 
 SDL_Window* window;
 

@@ -1,4 +1,4 @@
-#include "octavius.h"
+#include "../octavius.h"
 
 class Sound
 {

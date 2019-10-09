@@ -1,4 +1,4 @@
-#include "Sound.h"
+#include "Classes/Sound.h"
 
 Uint8* Sound::loadSound(const char* sound)
 {

@@ -1,4 +1,4 @@
-#include "octavius.h"
+#include "../octavius.h"
 #include <iostream>
 
 struct Image
