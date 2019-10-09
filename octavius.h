@@ -11,3 +11,5 @@
 #include <gl/GLU.h>
 
 #include <string>
+#include <vector>
+#include <map>
