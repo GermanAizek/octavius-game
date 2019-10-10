@@ -9,30 +9,27 @@ set(OCTAVIUS_SRC "copy_resources_debug_x64.bat" "copy_resources_debug_x86.bat" "
 add_executable(octavius ${OCTAVIUS_SRC})
 
 if(LINUX)
-	find_package(OpenGL REQUIRED)
+	find_package(OpenGL REQUIRED COMPONENTS OpenGL)
 	find_package(GLUT REQUIRED)
 	find_package(SDL2 REQUIRED)
-	include_directories(octavius ${SDL2_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS})
-	target_link_libraries(octavius ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
+	
+	add_dependencies(octavius OpenGL::OpenGL)
+	include_directories(octavius ${SDL2_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
+	target_link_libraries(octavius ${SDL2_LIBRARIES} OpenGL::OpenGL ${GLUT_LIBRARY})
 else()
 	set(SDL2_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/include;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_image/include;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_ttf/include")
 
 	# Support both 32 and 64 bit builds
 	if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
-	  set(SDL2_LIBRARIES "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x64/SDL2.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x64/SDL2main.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_image/lib/x64/SDL2_image.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_ttf/lib/x64/SDL2_ttf.lib")
+	  set(SDL2_LIBRARIES "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x64/SDL2.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x64/SDL2main.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_image/lib/x64/SDL2_image.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_ttf/lib/x64/SDL2_ttf.lib;")
 	else ()
-	  set(SDL2_LIBRARIES "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x86/SDL2.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x86/SDL2main.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_image/lib/x86/SDL2_image.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_ttf/lib/x86/SDL2_ttf.lib")
+	  set(SDL2_LIBRARIES "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x86/SDL2.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x86/SDL2main.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_image/lib/x86/SDL2_image.lib;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_ttf/lib/x86/SDL2_ttf.lib;")
 	endif ()
+	
+	set(GL_LIBRARIES "opengl32.lib;glu32.lib;")
 
 	string(STRIP "${SDL2_LIBRARIES}" SDL2_LIBRARIES)
 
 	include_directories(octavius ${SDL2_INCLUDE_DIRS})
-	link_directories(octavius ${SDL2_LIBRARIES})
-	
-	# fix please, must add static libs in linker->input
-	target_link_libraries(octavius "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x64/SDL2.lib" "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x64/SDL2main.lib" "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_image/lib/x64/SDL2_image.lib" "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_ttf/lib/x64/SDL2_ttf.lib")
-	# set_target_properties(octavius PROPERTIES LINK_FLAGS "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x64/SDL2.lib")
-	# set_target_properties(octavius PROPERTIES LINK_FLAGS "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/lib/x64/SDL2main.lib")
-	# set_target_properties(octavius PROPERTIES LINK_FLAGS "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_image/lib/x64/SDL2_image.lib")
-	# set_target_properties(octavius PROPERTIES LINK_FLAGS "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_ttf/lib/x64/SDL2_ttf.lib")
+	target_link_libraries(octavius ${SDL2_LIBRARIES} ${GL_LIBRARIES})
 endif()
