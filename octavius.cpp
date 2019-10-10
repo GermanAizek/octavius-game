@@ -295,7 +295,7 @@ int main()
 	Uint8* sndBufStop = sndStop.loadSound("gamedata/sounds/stop.wav");
 	Uint8* sndBufClick = sndClick.loadSound("gamedata/sounds/click.wav");
 	Uint8* sndBufCancel = sndCancel.loadSound("gamedata/sounds/cancel.wav");
-	Uint8* sndBufWin = sndWin.loadSound("gamedata/sounds/cancel.wav");
+	Uint8* sndBufWin = sndWin.loadSound("gamedata/sounds/win.wav");
 
 	SDL_Surface* background = loadTexture("gamedata/textures/background.png");
 	SDL_Rect rcBackground;
@@ -339,6 +339,22 @@ int main()
 	stopButton.drawRect.w = spinButton.surface->w;
 	stopButton.drawRect.h = spinButton.surface->h;
 
+	Button upButton;
+	upButton.surface = loadTexture("gamedata/textures/up_button.png");
+	upButton.surfaceHold = loadTexture("gamedata/textures/up_button_hold.png");
+	upButton.drawRect.x = 450;
+	upButton.drawRect.y = 15;
+	upButton.drawRect.w = spinButton.surface->w;
+	upButton.drawRect.h = spinButton.surface->h;
+
+	Button downButton;
+	downButton.surface = loadTexture("gamedata/textures/down_button.png");
+	downButton.surfaceHold = loadTexture("gamedata/textures/down_button_hold.png");
+	downButton.drawRect.x = 450;
+	downButton.drawRect.y = 55;
+	downButton.drawRect.w = spinButton.surface->w;
+	downButton.drawRect.h = spinButton.surface->h;
+
 	// texts
 	SDL_Color color = { 255, 255, 255, 0 }; // Red
 	SDL_Surface* bet;
@@ -349,8 +365,8 @@ int main()
 	rcBet.y = 23;
 	rcBalance.x = 820;
 	rcBalance.y = 23;
-	rcWin.x = 1200;
-	rcWin.y = 800;
+	rcWin.x = 1400;
+	rcWin.y = 795;
 
 	bool running = true;
 	while (running)
@@ -360,7 +376,7 @@ int main()
 
 		bet = RenderText(std::to_string(countLines).c_str(), color, 0, 0, 60);
 		balance = RenderText(std::to_string(credits).c_str(), color, 0, 0, 60);
-		win = RenderText(std::to_string(lastWin).c_str(), color, 0, 0, 30);
+		win = RenderText(std::to_string(lastWin).c_str(), color, 0, 0, 40);
 
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
@@ -424,20 +440,10 @@ int main()
 					case SDLK_SPACE:
 						sndStop.play();
 						slotmachine->setSpinnable(false);
+						clearItems();
 						//slotmachine->forceStop();
 						break;
 
-					// test
-					case SDLK_RETURN:
-						sndStart.play();
-						clearItems();
-						slotmachine->bet(countLines);
-						slotmachine->spin();
-						playAnimation(slotmachine);
-						if (slotmachine->getLastWinning() > 0)
-							sndWin.play();
-						break;
-					//
 					break;
 					}
 				}
@@ -447,6 +453,8 @@ int main()
 
 			button_process_event(&spinButton, &event);
 			button_process_event(&stopButton, &event);
+			button_process_event(&upButton, &event);
+			button_process_event(&downButton, &event);
 		}
 
 		SDL_BlitSurface(background, nullptr, screen, &rcBackground);
@@ -485,12 +493,42 @@ int main()
 
 		if (button(screen, &spinButton))
 		{
-			sndClick.play();
+			sndStart.play();
+			clearItems();
+			slotmachine->bet(countLines);
+			slotmachine->spin();
+			playAnimation(slotmachine);
+			if (slotmachine->getLastWinning() > 0)
+				sndWin.play();
 		}
 
 		if (button(screen, &stopButton))
 		{
-			sndClick.play();
+			sndStop.play();
+			slotmachine->setSpinnable(false);
+			clearItems();
+		}
+
+		if (button(screen, &upButton))
+		{
+			if (countLines < 5)
+			{
+				sndClick.play();
+				countLines++;
+			}
+			else
+				sndCancel.play();
+		}
+
+		if (button(screen, &downButton))
+		{
+			if (countLines > 1)
+			{
+				sndClick.play();
+				countLines--;
+			}
+			else
+				sndCancel.play();
 		}
 
 
