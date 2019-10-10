@@ -30,5 +30,6 @@ Build on Linux
        * cd build
        * cmake .. -G "Ninja" (in -G parameter select your compiler)
        * ninja
+       * copy gamedata folder from res to build directory
        * run ./octavius in build directory
        * Profit!
