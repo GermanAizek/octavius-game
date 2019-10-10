@@ -5,7 +5,7 @@ if(UNIX AND NOT APPLE)
 	set(LINUX TRUE)
 endif()
 
-set(OCTAVIUS_SRC "octavius.cpp" "octavius.h" "Wheel.cpp" "Classes/Wheel.h" "SlotMachine.cpp" "Classes/SlotMachine.h" "Render.cpp" "Classes/Render.h" "Sound.cpp" "Classes/Sound.h" "Timer.cpp" "Classes/Timer.h")
+set(OCTAVIUS_SRC "copy_resources_debug_x64.bat" "copy_resources_debug_x86.bat" "copy_resources_release_x64.bat" "copy_resources_release_x86.bat" "octavius.cpp" "octavius.h" "Wheel.cpp" "Classes/Wheel.h" "SlotMachine.cpp" "Classes/SlotMachine.h" "Render.cpp" "Classes/Render.h" "Sound.cpp" "Classes/Sound.h" "Timer.cpp" "Classes/Timer.h")
 add_executable(octavius ${OCTAVIUS_SRC})
 
 if(LINUX) 
