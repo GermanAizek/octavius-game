@@ -2,6 +2,10 @@
 Simple slot machine game based on SDL2.
 Render implemented on OpenGL.
 
+Screenshots:
+----------
+![Slotgame](https://germanaizek.github.io/screens/octavius.png "Slotgame")
+
 Requirements
 ----------
   - CMake
