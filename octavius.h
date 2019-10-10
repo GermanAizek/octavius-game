@@ -7,8 +7,8 @@
 #include <windows.h>
 #endif
 
-#include <gl/GL.h>
-#include <gl/GLU.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 
 #include <string>
 #include <vector>
