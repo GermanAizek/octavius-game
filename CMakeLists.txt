@@ -1,5 +1,6 @@
-﻿project(octavius-game)
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.8)
+set(CMAKE_CXX_STANDARD 17)
+project(octavius-game)
 
 if(UNIX AND NOT APPLE)
 	set(LINUX TRUE)
@@ -15,7 +16,7 @@ if(LINUX)
 	
 	add_dependencies(octavius OpenGL::OpenGL)
 	include_directories(octavius ${SDL2_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
-	target_link_libraries(octavius ${SDL2_LIBRARIES} OpenGL::OpenGL ${GLUT_LIBRARY})
+	target_link_libraries(octavius OpenGL::OpenGL GLU SDL2main SDL2_ttf SDL2_image ${GLUT_LIBRARY} ${SDL2_LIBRARIES})
 else()
 	set(SDL2_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2/include;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_image/include;${CMAKE_CURRENT_LIST_DIR}/thirdparty/SDL2_ttf/include")
 
