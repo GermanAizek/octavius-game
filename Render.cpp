@@ -42,7 +42,7 @@ void initVideo()
 	glMatrixMode(GL_MODELVIEW);
 }
 
-SDL_Surface* loadTexture(std::string fileName) {
+SDL_Surface* loadTexture(const std::string& fileName) {
 	SDL_Surface* image = IMG_Load(fileName.c_str());
 	image = SDL_ConvertSurfaceFormat(image, SDL_PIXELFORMAT_RGBA8888, 0);
 	GLuint object;
@@ -57,7 +57,7 @@ SDL_Surface* loadTexture(std::string fileName) {
 	return image;
 }
 
-SDL_Surface* RenderText(std::string message, SDL_Color color, int x, int y, int size) {
+SDL_Surface* RenderText(const std::string& message, SDL_Color color, int x, int y, int size) {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
