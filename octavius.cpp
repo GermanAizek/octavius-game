@@ -11,15 +11,25 @@ SDL_Window* window;
 
 //items
 // dumb code, I was in a hurry
-SDL_Surface* banana = loadTexture("gamedata/textures/icon_banana.png");
-SDL_Surface* bar = loadTexture("gamedata/textures/icon_bar.png");
-SDL_Surface* bell = loadTexture("gamedata/textures/icon_bell.png");
-SDL_Surface* cherry = loadTexture("gamedata/textures/icon_cherry.png");
-SDL_Surface* lemon = loadTexture("gamedata/textures/icon_lemon.png");
-SDL_Surface* orange = loadTexture("gamedata/textures/icon_orange.png");
-SDL_Surface* plum = loadTexture("gamedata/textures/icon_plum.png");
-SDL_Surface* seven = loadTexture("gamedata/textures/icon_seven.png");
-SDL_Surface* watermelon = loadTexture("gamedata/textures/icon_watermelon.png");
+std::string textureBanana("gamedata/textures/icon_banana.png");
+std::string textureBar("gamedata/textures/icon_bar.png");
+std::string textureBell("gamedata/textures/icon_bell.png");
+std::string textureCherry("gamedata/textures/icon_cherry.png");
+std::string textureLemon("gamedata/textures/icon_lemon.png");
+std::string textureOrange("gamedata/textures/icon_orange.png");
+std::string texturePlum("gamedata/textures/icon_plum.png");
+std::string textureSeven("gamedata/textures/icon_seven.png");
+std::string textureWatermelon("gamedata/textures/icon_watermelon.png");
+
+SDL_Surface* banana = loadTexture(textureBanana);
+SDL_Surface* bar = loadTexture(textureBar);
+SDL_Surface* bell = loadTexture(textureBell);
+SDL_Surface* cherry = loadTexture(textureCherry);
+SDL_Surface* lemon = loadTexture(textureLemon);
+SDL_Surface* orange = loadTexture(textureOrange);
+SDL_Surface* plum = loadTexture(texturePlum);
+SDL_Surface* seven = loadTexture(textureSeven);
+SDL_Surface* watermelon = loadTexture(textureWatermelon);
 SDL_Rect rcBanana, rcBar, rcBell, rcCherry, rcLemon, rcOrange, rcPlum, rcSeven, rcWatermelon;
 
 std::vector<SDL_Rect> bananas;
@@ -289,22 +299,44 @@ int main()
 	SDL_Surface* screen = SDL_GetWindowSurface(window);
 
 	// sounds
+	std::string soundStart("gamedata/sounds/start.wav");
+	std::string soundStop("gamedata/sounds/stop.wav");
+	std::string soundClick("gamedata/sounds/click.wav");
+	std::string soundCancel("gamedata/sounds/cancel.wav");
+	std::string soundWin("gamedata/sounds/win.wav");
+
+
 	Sound sndStart, sndStop, sndClick, sndCancel, sndWin;
 	SDL_AudioDeviceID deviceId = sndStart.getID();
-	Uint8* sndBufStart = sndStart.loadSound("gamedata/sounds/start.wav");
-	Uint8* sndBufStop = sndStop.loadSound("gamedata/sounds/stop.wav");
-	Uint8* sndBufClick = sndClick.loadSound("gamedata/sounds/click.wav");
-	Uint8* sndBufCancel = sndCancel.loadSound("gamedata/sounds/cancel.wav");
-	Uint8* sndBufWin = sndWin.loadSound("gamedata/sounds/win.wav");
+	Uint8* sndBufStart = sndStart.loadSound(soundStart);
+	Uint8* sndBufStop = sndStop.loadSound(soundStop);
+	Uint8* sndBufClick = sndClick.loadSound(soundClick);
+	Uint8* sndBufCancel = sndCancel.loadSound(soundCancel);
+	Uint8* sndBufWin = sndWin.loadSound(soundWin);
 
-	SDL_Surface* background = loadTexture("gamedata/textures/background.png");
+	// ui textures
+	std::string textureBackground("gamedata/textures/background.png");
+	std::string textureWheel("gamedata/textures/wheel.png");
+	std::string textureHeader("gamedata/textures/header.png");
+	std::string textureFooter("gamedata/textures/footer.png");
+	std::string textureSpin("gamedata/textures/spin_button.png");
+	std::string textureSpinHold("gamedata/textures/spin_button_hold.png");
+	std::string textureStop("gamedata/textures/stop_button.png");
+	std::string textureStopHold("gamedata/textures/stop_button_hold.png");
+	std::string textureUp("gamedata/textures/up_button.png");
+	std::string textureUpHold("gamedata/textures/up_button_hold.png");
+	std::string textureDown("gamedata/textures/down_button.png");
+	std::string textureDownHold("gamedata/textures/down_button_hold.png");
+
+
+	SDL_Surface* background = loadTexture(textureBackground);
 	SDL_Rect rcBackground;
 	rcBackground.x = 0;
 	rcBackground.y = 0;
 
-	SDL_Surface* wheelOne = loadTexture("gamedata/textures/wheel.png");
-	SDL_Surface* wheelTwo = loadTexture("gamedata/textures/wheel.png");
-	SDL_Surface* wheelThree = loadTexture("gamedata/textures/wheel.png");
+	SDL_Surface* wheelOne = loadTexture(textureWheel);
+	SDL_Surface* wheelTwo = loadTexture(textureWheel);
+	SDL_Surface* wheelThree = loadTexture(textureWheel);
 	SDL_Rect rcWheelOne, rcWheelTwo, rcWheelThree;
 	rcWheelOne.x = 500;
 	rcWheelOne.y = 70;
@@ -313,43 +345,43 @@ int main()
 	rcWheelThree.x = 500 + (wheelOne->w * 1.1) + (wheelTwo->w * 1.1);
 	rcWheelThree.y = 70;
 
-	SDL_Surface* header = loadTexture("gamedata/textures/header.png");
+	SDL_Surface* header = loadTexture(textureHeader);
 	SDL_Rect rcHeader;
 	rcHeader.x = 0;
 	rcHeader.y = 0;
 
-	SDL_Surface* footer = loadTexture("gamedata/textures/footer.png");
+	SDL_Surface* footer = loadTexture(textureFooter);
 	SDL_Rect rcFooter;
 	rcFooter.x = 0;
 	rcFooter.y = height * 0.72;
 
 	Button spinButton;
-	spinButton.surface = loadTexture("gamedata/textures/spin_button.png");
-	spinButton.surfaceHold = loadTexture("gamedata/textures/spin_button_hold.png");
+	spinButton.surface = loadTexture(textureSpin);
+	spinButton.surfaceHold = loadTexture(textureSpinHold);
 	spinButton.drawRect.x = width * 0.631;
 	spinButton.drawRect.y = height * 0.77;
 	spinButton.drawRect.w = spinButton.surface->w;
 	spinButton.drawRect.h = spinButton.surface->h;
 
 	Button stopButton;
-	stopButton.surface = loadTexture("gamedata/textures/stop_button.png");
-	stopButton.surfaceHold = loadTexture("gamedata/textures/stop_button_hold.png");
+	stopButton.surface = loadTexture(textureStop);
+	stopButton.surfaceHold = loadTexture(textureStopHold);
 	stopButton.drawRect.x = width * 0.485;
 	stopButton.drawRect.y = height * 0.73;
 	stopButton.drawRect.w = spinButton.surface->w;
 	stopButton.drawRect.h = spinButton.surface->h;
 
 	Button upButton;
-	upButton.surface = loadTexture("gamedata/textures/up_button.png");
-	upButton.surfaceHold = loadTexture("gamedata/textures/up_button_hold.png");
+	upButton.surface = loadTexture(textureUp);
+	upButton.surfaceHold = loadTexture(textureUpHold);
 	upButton.drawRect.x = 450;
 	upButton.drawRect.y = 15;
 	upButton.drawRect.w = spinButton.surface->w;
 	upButton.drawRect.h = spinButton.surface->h;
 
 	Button downButton;
-	downButton.surface = loadTexture("gamedata/textures/down_button.png");
-	downButton.surfaceHold = loadTexture("gamedata/textures/down_button_hold.png");
+	downButton.surface = loadTexture(textureDown);
+	downButton.surfaceHold = loadTexture(textureDownHold);
 	downButton.drawRect.x = 450;
 	downButton.drawRect.y = 55;
 	downButton.drawRect.w = spinButton.surface->w;

@@ -1,4 +1,5 @@
 #include "../octavius.h"
+#include <string>
 
 class Sound
 {
@@ -14,6 +15,6 @@ public:
 		SDL_Init(SDL_INIT_AUDIO);
 	}
 	SDL_AudioDeviceID getID() { return deviceId; }
-	Uint8* loadSound(const char* sound);
+	Uint8* loadSound(const std::string& sound);
 	bool play();
 };

@@ -1,8 +1,8 @@
 #include "Classes/Sound.h"
 
-Uint8* Sound::loadSound(const char* sound)
+Uint8* Sound::loadSound(const std::string& sound)
 {
-	SDL_LoadWAV(sound, &wavSpec, &wavBuffer, &wavLength);
+	SDL_LoadWAV(sound.c_str(), &wavSpec, &wavBuffer, &wavLength);
 
 	return wavBuffer;
 }
