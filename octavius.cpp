@@ -371,9 +371,9 @@ int main()
 
 	// texts
 	SDL_Color color = { 255, 255, 255, 0 }; // Red
-	SDL_Surface* bet;
-	SDL_Surface* balance;
-	SDL_Surface* win;
+	SDL_Surface* bet = nullptr;
+	SDL_Surface* balance = nullptr;
+	SDL_Surface* win = nullptr;
 	SDL_Rect rcBet, rcBalance, rcWin;
 	rcBet.x = 365;
 	rcBet.y = 23;

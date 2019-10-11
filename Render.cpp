@@ -77,6 +77,11 @@ SDL_Surface* RenderText(const std::string& message, SDL_Color color, int x, int 
 	glBindTexture(GL_TEXTURE_2D, texture);
 
 	TTF_Font* font = TTF_OpenFont("gamedata/fonts/arial.ttf", size);
+	if (!font)
+	{
+		printf("TTF_OpenFont: %s\n", TTF_GetError());
+		exit(0);
+	}
 	SDL_Surface* sFont = TTF_RenderText_Blended(font, message.c_str(), color);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
