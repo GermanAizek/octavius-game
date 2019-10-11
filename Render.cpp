@@ -42,8 +42,8 @@ void initVideo()
 	glMatrixMode(GL_MODELVIEW);
 }
 
-SDL_Surface* loadTexture(const char* fileName) {
-	SDL_Surface* image = IMG_Load(fileName);
+SDL_Surface* loadTexture(std::string fileName) {
+	SDL_Surface* image = IMG_Load(fileName.c_str());
 	image = SDL_ConvertSurfaceFormat(image, SDL_PIXELFORMAT_RGBA8888, 0);
 	GLuint object;
 	glGenTextures(1, &object);
@@ -57,7 +57,7 @@ SDL_Surface* loadTexture(const char* fileName) {
 	return image;
 }
 
-SDL_Surface* RenderText(const char* message, SDL_Color color, int x, int y, int size) {
+SDL_Surface* RenderText(std::string message, SDL_Color color, int x, int y, int size) {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
@@ -77,7 +77,7 @@ SDL_Surface* RenderText(const char* message, SDL_Color color, int x, int y, int 
 	glBindTexture(GL_TEXTURE_2D, texture);
 
 	TTF_Font* font = TTF_OpenFont("gamedata/fonts/arial.ttf", size);
-	SDL_Surface* sFont = TTF_RenderText_Blended(font, message, color);
+	SDL_Surface* sFont = TTF_RenderText_Blended(font, message.c_str(), color);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

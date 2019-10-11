@@ -1,5 +1,7 @@
 #include "../octavius.h"
 #include <iostream>
+#include <string>
+
 
 struct Image
 {
@@ -18,8 +20,8 @@ typedef struct
 } Button;
 
 void initVideo();
-SDL_Surface* loadTexture(const char* fileName);
-SDL_Surface* RenderText(const char* message, SDL_Color color, int x, int y, int size);
+SDL_Surface* loadTexture(std::string fileName);
+SDL_Surface* RenderText(std::string message, SDL_Color color, int x, int y, int size);
 void button_process_event(Button* btn, const SDL_Event* ev);
 bool button(SDL_Surface* screen, Button* btn);
 
