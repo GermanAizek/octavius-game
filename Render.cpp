@@ -44,6 +44,11 @@ void initVideo()
 
 SDL_Surface* loadTexture(const std::string& fileName) {
 	SDL_Surface* image = IMG_Load(fileName.c_str());
+	if (!image)
+	{
+		printf("IMG_LoadTexture: %s\n", IMG_GetError());
+		exit(0);
+	}
 	image = SDL_ConvertSurfaceFormat(image, SDL_PIXELFORMAT_RGBA8888, 0);
 	GLuint object;
 	glGenTextures(1, &object);
@@ -80,7 +85,7 @@ SDL_Surface* RenderText(const std::string& message, SDL_Color color, int x, int 
 	if (!font)
 	{
 		printf("TTF_OpenFont: %s\n", TTF_GetError());
-		exit(0);
+		exit(1);
 	}
 	SDL_Surface* sFont = TTF_RenderText_Blended(font, message.c_str(), color);
 
