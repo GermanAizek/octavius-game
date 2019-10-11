@@ -11,17 +11,6 @@ SDL_Window* window;
 
 //items
 // dumb code, I was in a hurry
-SDL_Surface* banana = loadTexture("gamedata/textures/icon_banana.png");
-SDL_Surface* bar = loadTexture("gamedata/textures/icon_bar.png");
-SDL_Surface* bell = loadTexture("gamedata/textures/icon_bell.png");
-SDL_Surface* cherry = loadTexture("gamedata/textures/icon_cherry.png");
-SDL_Surface* lemon = loadTexture("gamedata/textures/icon_lemon.png");
-SDL_Surface* orange = loadTexture("gamedata/textures/icon_orange.png");
-SDL_Surface* plum = loadTexture("gamedata/textures/icon_plum.png");
-SDL_Surface* seven = loadTexture("gamedata/textures/icon_seven.png");
-SDL_Surface* watermelon = loadTexture("gamedata/textures/icon_watermelon.png");
-SDL_Rect rcBanana, rcBar, rcBell, rcCherry, rcLemon, rcOrange, rcPlum, rcSeven, rcWatermelon;
-
 std::vector<SDL_Rect> bananas;
 std::vector<SDL_Rect> bars;
 std::vector<SDL_Rect> bells;
@@ -99,7 +88,7 @@ void clearItems()
 	}
 }
 
-void playAnimation(SlotMachine* machine)
+void playAnimation(SlotMachine* machine, std::vector<SDL_Rect> rects)
 {
 	std::vector<std::pair<int, int>> coordsGridsItems
 	{
@@ -117,7 +106,7 @@ void playAnimation(SlotMachine* machine)
 	//Timer timer = Timer();
 	//timer.setInterval([&]() { machine->setSpinnable(false); }, 2000);
 
-	int iter = 0;
+	//int iter = 0;
 	std::vector<int> screen = machine->getScreen();
 	for (int i = 0; i < screen.size(); i++)
 	{
@@ -138,9 +127,9 @@ void playAnimation(SlotMachine* machine)
 			case SlotMachine::banana:
 				if (bananas.size() == 0)
 				{
-					rcBanana.x = coordsGridsItems[i].first;
-					rcBanana.y = coordsGridsItems[i].second;
-					bananas.push_back(rcBanana);
+					rects[SlotMachine::banana].x = coordsGridsItems[i].first;
+					rects[SlotMachine::banana].y = coordsGridsItems[i].second;
+					bananas.push_back(rects[SlotMachine::banana]);
 				}
 				else
 				{
@@ -153,9 +142,9 @@ void playAnimation(SlotMachine* machine)
 			case SlotMachine::bar:
 				if (bars.size() == 0)
 				{
-					rcBar.x = coordsGridsItems[i].first;
-					rcBar.y = coordsGridsItems[i].second;
-					bars.push_back(rcBar);
+					rects[SlotMachine::bar].x = coordsGridsItems[i].first;
+					rects[SlotMachine::bar].y = coordsGridsItems[i].second;
+					bars.push_back(rects[SlotMachine::bar]);
 				}
 				else
 				{
@@ -168,9 +157,9 @@ void playAnimation(SlotMachine* machine)
 			case SlotMachine::bell:
 				if (bells.size() == 0)
 				{
-					rcBell.x = coordsGridsItems[i].first;
-					rcBell.y = coordsGridsItems[i].second;
-					bells.push_back(rcBell);
+					rects[SlotMachine::bell].x = coordsGridsItems[i].first;
+					rects[SlotMachine::bell].y = coordsGridsItems[i].second;
+					bells.push_back(rects[SlotMachine::bell]);
 				}
 				else
 				{
@@ -183,9 +172,9 @@ void playAnimation(SlotMachine* machine)
 			case SlotMachine::cherry:
 				if (cherrys.size() == 0)
 				{
-					rcCherry.x = coordsGridsItems[i].first;
-					rcCherry.y = coordsGridsItems[i].second;
-					cherrys.push_back(rcCherry);
+					rects[SlotMachine::cherry].x = coordsGridsItems[i].first;
+					rects[SlotMachine::cherry].y = coordsGridsItems[i].second;
+					cherrys.push_back(rects[SlotMachine::cherry]);
 				}
 				else
 				{
@@ -198,9 +187,9 @@ void playAnimation(SlotMachine* machine)
 			case SlotMachine::lemon:
 				if (lemons.size() == 0)
 				{
-					rcLemon.x = coordsGridsItems[i].first;
-					rcLemon.y = coordsGridsItems[i].second;
-					lemons.push_back(rcLemon);
+					rects[SlotMachine::lemon].x = coordsGridsItems[i].first;
+					rects[SlotMachine::lemon].y = coordsGridsItems[i].second;
+					lemons.push_back(rects[SlotMachine::lemon]);
 				}
 				else
 				{
@@ -213,9 +202,9 @@ void playAnimation(SlotMachine* machine)
 			case SlotMachine::orange:
 				if (oranges.size() == 0)
 				{
-					rcOrange.x = coordsGridsItems[i].first;
-					rcOrange.y = coordsGridsItems[i].second;
-					oranges.push_back(rcOrange);
+					rects[SlotMachine::orange].x = coordsGridsItems[i].first;
+					rects[SlotMachine::orange].y = coordsGridsItems[i].second;
+					oranges.push_back(rects[SlotMachine::orange]);
 				}
 				else
 				{
@@ -228,9 +217,9 @@ void playAnimation(SlotMachine* machine)
 			case SlotMachine::plum:
 				if (plums.size() == 0)
 				{
-					rcPlum.x = coordsGridsItems[i].first;
-					rcPlum.y = coordsGridsItems[i].second;
-					plums.push_back(rcPlum);
+					rects[SlotMachine::plum].x = coordsGridsItems[i].first;
+					rects[SlotMachine::plum].y = coordsGridsItems[i].second;
+					plums.push_back(rects[SlotMachine::plum]);
 				}
 				else
 				{
@@ -243,9 +232,9 @@ void playAnimation(SlotMachine* machine)
 			case SlotMachine::seven:
 				if (sevens.size() == 0)
 				{
-					rcSeven.x = coordsGridsItems[i].first;
-					rcSeven.y = coordsGridsItems[i].second;
-					sevens.push_back(rcSeven);
+					rects[SlotMachine::seven].x = coordsGridsItems[i].first;
+					rects[SlotMachine::seven].y = coordsGridsItems[i].second;
+					sevens.push_back(rects[SlotMachine::seven]);
 				}
 				else
 				{
@@ -258,9 +247,9 @@ void playAnimation(SlotMachine* machine)
 			case SlotMachine::watermelon:
 				if (watermelons.size() == 0)
 				{
-					rcWatermelon.x = coordsGridsItems[i].first;
-					rcWatermelon.y = coordsGridsItems[i].second;
-					watermelons.push_back(rcWatermelon);
+					rects[SlotMachine::watermelon].x = coordsGridsItems[i].first;
+					rects[SlotMachine::watermelon].y = coordsGridsItems[i].second;
+					watermelons.push_back(rects[SlotMachine::watermelon]);
 				}
 				else
 				{
@@ -297,6 +286,31 @@ int main()
 	Uint8* sndBufCancel = sndCancel.loadSound("gamedata/sounds/cancel.wav");
 	Uint8* sndBufWin = sndWin.loadSound("gamedata/sounds/win.wav");
 
+	// items
+	SDL_Surface* banana = loadTexture("gamedata/textures/icon_banana.png");
+	SDL_Surface* bar = loadTexture("gamedata/textures/icon_bar.png");
+	SDL_Surface* bell = loadTexture("gamedata/textures/icon_bell.png");
+	SDL_Surface* cherry = loadTexture("gamedata/textures/icon_cherry.png");
+	SDL_Surface* lemon = loadTexture("gamedata/textures/icon_lemon.png");
+	SDL_Surface* orange = loadTexture("gamedata/textures/icon_orange.png");
+	SDL_Surface* plum = loadTexture("gamedata/textures/icon_plum.png");
+	SDL_Surface* seven = loadTexture("gamedata/textures/icon_seven.png");
+	SDL_Surface* watermelon = loadTexture("gamedata/textures/icon_watermelon.png");
+	SDL_Rect rcBanana, rcBar, rcBell, rcCherry, rcLemon, rcOrange, rcPlum, rcSeven, rcWatermelon;
+
+	std::vector<SDL_Rect> itemsRect = {
+		rcSeven,
+		rcBanana,
+		rcWatermelon,
+		rcBell,
+		rcBar,
+		rcLemon,
+		rcOrange,
+		rcPlum,
+		rcCherry
+	};
+
+	// ui
 	SDL_Surface* background = loadTexture("gamedata/textures/background.png");
 	SDL_Rect rcBackground;
 	rcBackground.x = 0;
@@ -401,7 +415,7 @@ int main()
 						clearItems();
 						slotmachine->bet(countLines);
 						slotmachine->spin();
-						playAnimation(slotmachine);
+						playAnimation(slotmachine, itemsRect);
 						if (slotmachine->getLastWinning() > 0)
 							sndWin.play();
 						break;
@@ -497,7 +511,7 @@ int main()
 			clearItems();
 			slotmachine->bet(countLines);
 			slotmachine->spin();
-			playAnimation(slotmachine);
+			playAnimation(slotmachine, itemsRect);
 			if (slotmachine->getLastWinning() > 0)
 				sndWin.play();
 		}
