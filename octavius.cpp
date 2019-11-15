@@ -8,9 +8,8 @@
 #endif
 
 SDL_Window* window;
-
-//extern const int width = 1920;
-//extern const int height = 1080;
+int width;
+int height;
 
 //items
 // dumb code, I was in a hurry
@@ -342,37 +341,37 @@ int main()
 	SDL_Surface* footer = loadTexture("gamedata/textures/footer.png");
 	SDL_Rect rcFooter;
 	rcFooter.x = 0;
-	rcFooter.y = height * 0.72;
+	rcFooter.y = height * 0.9;
 
 	Button spinButton;
 	spinButton.surface = loadTexture("gamedata/textures/spin_button.png");
 	spinButton.surfaceHold = loadTexture("gamedata/textures/spin_button_hold.png");
-	spinButton.drawRect.x = width * 0.631;
-	spinButton.drawRect.y = height * 0.77;
+	spinButton.drawRect.x = width * 0.785;
+	spinButton.drawRect.y = height * 0.96;
 	spinButton.drawRect.w = spinButton.surface->w;
 	spinButton.drawRect.h = spinButton.surface->h;
 
 	Button stopButton;
 	stopButton.surface = loadTexture("gamedata/textures/stop_button.png");
 	stopButton.surfaceHold = loadTexture("gamedata/textures/stop_button_hold.png");
-	stopButton.drawRect.x = width * 0.485;
-	stopButton.drawRect.y = height * 0.73;
+	stopButton.drawRect.x = width * 0.605;
+	stopButton.drawRect.y = height * 0.91;
 	stopButton.drawRect.w = spinButton.surface->w;
 	stopButton.drawRect.h = spinButton.surface->h;
 
 	Button upButton;
 	upButton.surface = loadTexture("gamedata/textures/up_button.png");
 	upButton.surfaceHold = loadTexture("gamedata/textures/up_button_hold.png");
-	upButton.drawRect.x = 450;
-	upButton.drawRect.y = 15;
+	upButton.drawRect.x = width * 0.29;
+	upButton.drawRect.y = height * 0.01;
 	upButton.drawRect.w = spinButton.surface->w;
 	upButton.drawRect.h = spinButton.surface->h;
 
 	Button downButton;
 	downButton.surface = loadTexture("gamedata/textures/down_button.png");
 	downButton.surfaceHold = loadTexture("gamedata/textures/down_button_hold.png");
-	downButton.drawRect.x = 450;
-	downButton.drawRect.y = 55;
+	downButton.drawRect.x = width * 0.29;
+	downButton.drawRect.y = height * 0.07;
 	downButton.drawRect.w = spinButton.surface->w;
 	downButton.drawRect.h = spinButton.surface->h;
 
@@ -382,12 +381,12 @@ int main()
 	SDL_Surface* balance = nullptr;
 	SDL_Surface* win = nullptr;
 	SDL_Rect rcBet, rcBalance, rcWin;
-	rcBet.x = 365;
-	rcBet.y = 23;
-	rcBalance.x = 820;
-	rcBalance.y = 23;
-	rcWin.x = 1400;
-	rcWin.y = 795;
+	rcBet.x = width * 0.24;
+	rcBet.y = height * 0.025;
+	rcBalance.x = width * 0.53;
+	rcBalance.y = height * 0.025;
+	rcWin.x = width * 0.9;
+	rcWin.y = height * 0.92;
 
 	bool running = true;
 	while (running)

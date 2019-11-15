@@ -1,4 +1,6 @@
-﻿#include "SDL.h"
+﻿#ifndef OCTAVIUS_H
+#define OCTAVIUS_H
+#include "SDL.h"
 #include "SDL_ttf.h"
 #include "SDL_image.h"
 
@@ -13,3 +15,4 @@
 #include <string>
 #include <vector>
 #include <map>
+#endif
