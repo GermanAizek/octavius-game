@@ -1,8 +1,5 @@
 #include "Classes/Render.h"
 
-extern const int width = 1920;
-extern const int height = 1080;
-
 void initVideo()
 {
 	// SDL video device init
@@ -16,6 +13,24 @@ void initVideo()
 		exit(1);
 	}
 
+	SDL_DisplayMode currentDisplayMode;
+	for (size_t i = 0; i < SDL_GetNumVideoDisplays(); ++i) {
+
+		int displayMode = SDL_GetCurrentDisplayMode(i, &currentDisplayMode);
+		if (displayMode != 0)
+		{
+#ifdef WIN32
+			MessageBox(NULL, SDL_GetError(), "Fatal Error", MB_OK);
+#elif LINUX
+			std::cout << SDL_GetError() << '\n';
+#endif
+			exit(1);
+		}
+	}
+
+	width = currentDisplayMode.w;
+	height = currentDisplayMode.h;
+
 	// SDL TTF init
 	TTF_Init();
 
@@ -25,7 +40,7 @@ void initVideo()
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
 
-	window = SDL_CreateWindow("Slot machine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
+	window = SDL_CreateWindow("Slot machine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN | SDL_WINDOW_SHOWN);
 
 	if (window == nullptr)
 	{
@@ -35,6 +50,17 @@ void initVideo()
 		std::cout << SDL_GetError() << '\n';
 #endif
 		exit(1);
+	}
+
+	int result = SDL_SetWindowDisplayMode(window, &currentDisplayMode);
+	if (result != 0)
+	{
+#ifdef WIN32
+			MessageBox(NULL, SDL_GetError(), "Fatal Error", MB_OK);
+#elif LINUX
+			std::cout << SDL_GetError() << '\n';
+#endif
+			exit(1);
 	}
 
 	// init GLContext
@@ -75,6 +101,7 @@ SDL_Surface* loadTexture(const std::string& fileName) {
 		exit(0);
 	}
 	image = SDL_ConvertSurfaceFormat(image, SDL_PIXELFORMAT_RGBA8888, 0);
+
 	GLuint object;
 	glGenTextures(1, &object);
 	glBindTexture(GL_TEXTURE_2D, object);
@@ -116,8 +143,8 @@ SDL_Surface* RenderText(const std::string& message, SDL_Color color, int x, int 
 #endif
 		exit(1);
 	}
-	SDL_Surface* sFont = TTF_RenderText_Blended(font, message.c_str(), color);
 
+	SDL_Surface* sFont = TTF_RenderText_Blended(font, message.c_str(), color);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, sFont->w, sFont->h, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, sFont->pixels);
