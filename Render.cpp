@@ -8,7 +8,11 @@ void initVideo()
 	// SDL video device init
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		std::cout << "Unable to init SDL, error: " << SDL_GetError() << '\n';
+#ifdef WIN32
+		MessageBox(NULL, SDL_GetError(), "Fatal Error", MB_OK);
+#elif LINUX
+		std::cout << SDL_GetError() << '\n';
+#endif
 		exit(1);
 	}
 
@@ -23,10 +27,27 @@ void initVideo()
 
 	window = SDL_CreateWindow("Slot machine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
 
+	if (window == nullptr)
+	{
+#ifdef WIN32
+		MessageBox(NULL, SDL_GetError(), "Fatal Error", MB_OK);
+#elif LINUX
+		std::cout << SDL_GetError() << '\n';
+#endif
+		exit(1);
+	}
+
 	// init GLContext
 	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
-	if (window == nullptr)
+	if (glcontext == nullptr)
+	{
+#ifdef WIN32
+		MessageBox(NULL, SDL_GetError(), "Fatal Error", MB_OK);
+#elif LINUX
+		std::cout << SDL_GetError() << '\n';
+#endif
 		exit(1);
+	}
 
 	// init opengl
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -46,7 +67,11 @@ SDL_Surface* loadTexture(const std::string& fileName) {
 	SDL_Surface* image = IMG_Load(fileName.c_str());
 	if (!image)
 	{
-		printf("IMG_LoadTexture: %s\n", IMG_GetError());
+#ifdef WIN32
+		MessageBox(NULL, SDL_GetError(), "Error", MB_OK);
+#elif LINUX
+		std::cout << SDL_GetError() << '\n';
+#endif
 		exit(0);
 	}
 	image = SDL_ConvertSurfaceFormat(image, SDL_PIXELFORMAT_RGBA8888, 0);
@@ -84,7 +109,11 @@ SDL_Surface* RenderText(const std::string& message, SDL_Color color, int x, int 
 	TTF_Font* font = TTF_OpenFont("gamedata/fonts/arial.ttf", size);
 	if (!font)
 	{
-		printf("TTF_OpenFont: %s\n", TTF_GetError());
+#ifdef WIN32
+		MessageBox(NULL, SDL_GetError(), "Fatal Error", MB_OK);
+#elif LINUX
+		std::cout << SDL_GetError() << '\n';
+#endif
 		exit(1);
 	}
 	SDL_Surface* sFont = TTF_RenderText_Blended(font, message.c_str(), color);
