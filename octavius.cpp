@@ -394,9 +394,9 @@ int main()
 		credits = slotmachine->getCredits();
 		lastWin = slotmachine->getLastWinning();
 
-		bet = RenderText(std::to_string(countLines).c_str(), color, 0, 0, 60);
-		balance = RenderText(std::to_string(credits).c_str(), color, 0, 0, 60);
-		win = RenderText(std::to_string(lastWin).c_str(), color, 0, 0, 40);
+		bet = RenderText(std::to_string(countLines), color, 0, 0, 60);
+		balance = RenderText(std::to_string(credits), color, 0, 0, 60);
+		win = RenderText(std::to_string(lastWin), color, 0, 0, 40);
 
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
